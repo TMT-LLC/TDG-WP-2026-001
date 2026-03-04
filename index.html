@@ -1,14 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Title</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Noi-Noi Paints</title>
+  <link id="url-logo" rel="icon" type="image/png" href="/assets/img/cleanlogo.png">
+  <link rel="stylesheet" href="/assets/css/index.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-    <!-- Your content goes here -->
-    <h1>Hello World!</h1>
-    <script src="script.js" defer></script>
+
+  <!-- HEADER / NAV -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <!-- NEED TO RESHAPE TO CIRCLE AND ENLARGE -->
+        <img src="/assets/img/shoplogo.JPG" alt="Noi-Noi Paints Logo" />
+        <!-- Replace logo.png with Tina's actual logo file -->
+      </div>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="#featured">Featured</a></li>
+          <li><a href="#about">About Me</a></li>
+          <li><a href="#faq">FAQ &amp; Business</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="https://www.etsy.com" target="_blank" class="etsy-btn">Visit My Etsy ↗</a></li>
+        </ul>
+      </nav>
+      <button class="hamburger" aria-label="Toggle menu" onclick="toggleMenu()">☰</button>
+    </div>
+    <nav class="mobile-nav" id="mobileNav">
+      <ul>
+        <li><a href="#featured" onclick="toggleMenu()">Featured</a></li>
+        <li><a href="#about" onclick="toggleMenu()">About Me</a></li>
+        <li><a href="#faq" onclick="toggleMenu()">FAQ &amp; Business</a></li>
+        <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
+        <li><a href="#testimonials" onclick="toggleMenu()">Testimonials</a></li>
+        <li><a href="https://www.etsy.com" target="_blank">Visit My Etsy ↗</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Noi-Noi Paints</h1>
+        <p>Professional artwork &amp; custom commissions painted for everyone! </p>
+        <a href="#featured" class="btn-primary">View My Work</a>
+      </div>
+    </section>
+
+    <!-- FEATURED GALLERY -->
+    <section class="section" id="featured">
+      <div class="section-inner">
+        <h2 class="section-title">Featured Works</h2>
+        <p class="section-subtitle">A look at my previous commissioned and non-comissioned paintings for reference, either for sale or already purchased. Check my instagram for some of my other work too!</p>
+        <div class="gallery-grid">
+          <!-- Replace src values with Tina's actual artwork images -->
+          <div class="gallery-item"><img src="/assets/img/chopper_framed.JPG" alt="Painting 1" /></div>
+          <div class="gallery-item"><img src="/assets/img/hxh_framed.JPG" alt="Painting 2" /></div>
+          <div class="gallery-item"><img src="/assets/img/piccolo_framed.JPG" alt="Painting 3" /></div>
+          <div class="gallery-item"><img src="/assets/img/tigerkitty_framed.JPG" alt="Painting 4" /></div>
+          <div class="gallery-item"><img src="/assets/img/instagram.PNG" alt="Painting 5" /></div>
+          <div class="gallery-item"><img src="/assets/img/thor_notepad.JPG" alt="Painting 6" /></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT ME -->
+    <section class="section section-alt" id="about">
+      <div class="section-inner about-flex">
+        <div class="about-image">
+          <img src="assets/img/shoplogo.JPG" alt="Tina Graves - Noi-Noi Paints" />
+          <!-- Replace with photo of Tina or a representative painting -->
+        </div>
+        <div class="about-text">
+          <h2 class="section-title left">About Me</h2>
+          <p>I'm <strong>Tina Graves</strong>, the artist behind Noi-Noi Paints. [Bio goes here, tell your customers a little about who you are, what inspires your art, what makes your work unique, etc.]</p>
+          <p>[Bio goes here, tell your customers a little about who you are, what inspires your art, what makes your work unique, etc.]</p>
+          <div class="about-links">
+            <a href="https://www.etsy.com" target="_blank" class="btn-primary">My Etsy Shop ↗</a>
+            <a href="https://www.instagram.com/tinagraves__" target="_blank" class="btn-secondary">Instagram ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="section-inner">
+        <h2 class="section-title">FAQ &amp; Business</h2>
+        <p class="section-subtitle">Everything you need to know before reaching out or placing an order.</p>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">Do you take commissions? <span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>[Example answer — Abosultely! Please reach out via the Contact section at the bottom or top of this page, or my Etsy page to discuss your ideas.]</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">How long does a commission take? <span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>[Example answer — Turnaround varies by complexity, typically X weeks.]</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">What are your payment methods? <span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>[Example answer — Payments are processed securely through Etsy.]</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">Do you ship internationally? <span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>[Example answer goes here.]</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">Can I use your artwork for personal projects? <span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>[Example answer — All artwork is © Tina Graves / Noi-Noi Paints. Please do not reproduce without written permission.]</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section section-alt" id="testimonials">
+      <div class="section-inner">
+        <h2 class="section-title">Testimonials</h2>
+        <p class="section-subtitle">What people are saying about Noi-Noi Paints.</p>
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <p class="testimonial-text">"Absolutely loved my custom portrait! Tina captured everything perfectly."</p>
+            <p class="testimonial-author">— Tyler Perry</p>
+          </div>
+          <div class="testimonial-card">
+            <p class="testimonial-text">"The quality of the work blew me away. Will definitely be ordering again!"</p>
+            <p class="testimonial-author">— Lebron James</p>
+          </div>
+          <div class="testimonial-card">
+            <p class="testimonial-text">"Super communicative throughout the whole process. 10/10 would recommend!"</p>
+            <p class="testimonial-author">— Barack Obama</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <div class="section-inner contact-flex">
+        <div class="contact-info">
+          <h2 class="section-title left">Contact Me</h2>
+          <p>Have a question, want to discuss a commission, or just want to say hi? Reach out through any of the channels below!</p>
+          <ul class="contact-list">
+            <li><span class="contact-label">Email:</span> <a href="mailto:dempseytina20@gmail.com">dempseytina20@gmail.com</a></li>
+            <li><span class="contact-label">Etsy:</span> <a href="https://www.etsy.com" target="_blank">Noi-Noi Paints on Etsy ↗</a></li>
+            <li><span class="contact-label">Instagram:</span> <a href="https://www.instagram.com/tinagraves__" target="_blank">@tinagraves__ ↗</a></li>
+          </ul>
+        </div>
+        <div class="contact-form">
+          <h3>Send a Message</h3>
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" placeholder="Enter your name..." />
+          </div>
+          <div class="form-group">
+            <label for="email">Your Email</label>
+            <input type="email" id="email" placeholder="your@email.com" />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" rows="5" placeholder="Tell me about your commission idea..."></textarea>
+          </div>
+          <button class="btn-primary" type="button">Send Message</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="newsletter-bar">
+      <div class="section-inner newsletter-flex">
+        <div>
+          <h3>Stay in the Loop</h3>
+          <p>Get notified about new works, commission openings, and other updates!</p>
+        </div>
+        <div class="newsletter-form">
+          <input type="email" placeholder="your@email.com" />
+          <button class="btn-white" type="button">Subscribe</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-logo">Noi-Noi Paints</p>
+      <nav class="footer-nav">
+        <a href="#featured">Featured</a>
+        <a href="#about">About</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+        <a href="#testimonials">Testimonials</a>
+      </nav>
+      <div class="footer-social">
+        <a href="https://www.etsy.com" target="_blank">Etsy</a>
+        <a href="https://www.instagram.com/tinagraves__" target="_blank">Instagram</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 TIMBUKTU LLC. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('mobileNav').classList.toggle('open');
+    }
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+  </script>
+
 </body>
 </html>
