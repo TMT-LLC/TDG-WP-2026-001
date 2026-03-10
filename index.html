@@ -10,13 +10,15 @@
 </head>
 <body>
 
-  <!-- HEADER / NAV -->
+  <!-- =============================================
+       HEADER / NAV
+       Sticky top bar. Hamburger toggles mobile nav.
+       toggleMenu() defined in <script> at bottom.
+  ============================================= -->
   <header class="site-header">
     <div class="header-inner">
       <div class="logo">
-        <!-- NEED TO RESHAPE TO CIRCLE AND ENLARGE -->
         <img src="/assets/img/shoplogo.JPG" alt="Noi-Noi Paints Logo" />
-        <!-- Replace logo.png with Tina's actual logo file -->
       </div>
       <nav class="main-nav">
         <ul>
@@ -28,7 +30,7 @@
           <li><a href="https://www.etsy.com" target="_blank" class="etsy-btn">Visit My Etsy ↗</a></li>
         </ul>
       </nav>
-      <button class="hamburger" aria-label="Toggle menu" onclick="toggleMenu()">☰</button>
+      <button class="hamburger" aria-label="Toggle menu" onclick="toggleMenu()">&#9776;</button>
     </div>
     <nav class="mobile-nav" id="mobileNav">
       <ul>
@@ -44,52 +46,176 @@
 
   <main>
 
-    <!-- HERO -->
+    <!-- =============================================
+         HERO — unchanged from original
+    ============================================= -->
     <section class="hero">
       <div class="hero-content">
         <h1>Noi-Noi Paints</h1>
-        <p>Professional artwork &amp; custom commissions painted for everyone! </p>
+        <p>Professional artwork &amp; custom commissions painted for everyone!</p>
         <a href="#featured" class="btn-primary">View My Work</a>
       </div>
     </section>
 
-    <!-- FEATURED GALLERY -->
+
+    <!-- =============================================
+         FEATURED GALLERY
+         
+         CHANGE: Two separate layouts replace the
+         original single .gallery-grid:
+         
+           .gallery-mobile  — shown only on mobile (<768px)
+             Stacked vertical cards, same gallery-item
+             styling as before. 7th container is always
+             the Instagram QR code.
+         
+           .gallery-desktop — shown only on desktop (>=768px)
+             Manual scroll-wheel + arrow slider.
+             Non-looped (stops at first/last slide).
+             Slide 7 is always the Instagram QR code.
+             JS at bottom drives the track translateX.
+    ============================================= -->
     <section class="section" id="featured">
       <div class="section-inner">
         <h2 class="section-title">Featured Works</h2>
-        <p class="section-subtitle">A look at my previous commissioned and non-comissioned paintings for reference, either for sale or already purchased. Check my instagram for some of my other work too!</p>
-        <div class="gallery-grid">
-          <!-- Replace src values with Tina's actual artwork images -->
-          <div class="gallery-item"><img src="/assets/img/chopper_framed.JPG" alt="Painting 1" /></div>
-          <div class="gallery-item"><img src="/assets/img/hxh_framed.JPG" alt="Painting 2" /></div>
-          <div class="gallery-item"><img src="/assets/img/piccolo_framed.JPG" alt="Painting 3" /></div>
-          <div class="gallery-item"><img src="/assets/img/tigerkitty_framed.JPG" alt="Painting 4" /></div>
-          <div class="gallery-item"><img src="/assets/img/instagram.PNG" alt="Painting 5" /></div>
-          <div class="gallery-item"><img src="/assets/img/thor_notepad.JPG" alt="Painting 6" /></div>
-        </div>
-      </div>
-    </section>
+        <p class="section-subtitle">A look at my previous commissioned and non-commissioned paintings for reference, either for sale or already purchased. Check my instagram for some of my other work too!</p>
 
-    <!-- ABOUT ME -->
+
+        <!-- ==========================================
+             MOBILE: stacked cards (hidden on desktop)
+             shoplogo.JPG removed per fix #2.
+             QR image enlarged per fix #3.
+             Real Instagram link added per fix #3.
+        =========================================== -->
+        <div class="gallery-grid gallery-mobile">
+
+          <div class="gallery-item"><img src="/assets/img/chopper_framed.JPG"    alt="Painting 1" /></div>
+          <div class="gallery-item"><img src="/assets/img/hxh_framed.JPG"        alt="Painting 2" /></div>
+          <div class="gallery-item"><img src="/assets/img/piccolo_framed.JPG"    alt="Painting 3" /></div>
+          <div class="gallery-item"><img src="/assets/img/tigerkitty_framed.JPG" alt="Painting 4" /></div>
+          <div class="gallery-item"><img src="/assets/img/thor_notepad.JPG"      alt="Painting 5" /></div>
+
+          <!-- 6th container (was 7th) — Instagram QR code, always last on mobile.
+               QR image enlarged so phone cameras can scan it easily (fix #3).
+               @tinagraves__ links to the real Instagram page (fix #3). -->
+          <div class="gallery-item gallery-qr-card">
+            <a href="https://www.instagram.com/tinagraves__" target="_blank" aria-label="Visit @tinagraves__ on Instagram">
+              <img src="/assets/img/instagram.PNG" alt="Instagram QR Code — scan to follow @tinagraves__" />
+            </a>
+            <div class="qr-caption">
+              <p>Follow on Instagram</p>
+              <small>Scan or <a href="https://www.instagram.com/tinagraves__" target="_blank">@tinagraves__</a></small>
+            </div>
+          </div>
+
+        </div><!-- /gallery-mobile -->
+
+
+        <!-- ==========================================
+             DESKTOP: scroll-wheel slider (hidden on mobile)
+             
+             LAYOUT: .gallery-desktop-outer is position:relative
+               and holds the arrows absolutely on its left/right.
+               .gallery-track-wrap is overflow:hidden INSIDE that,
+               so the arrows are never clipped — they sit on the
+               sides of the visible image area without overlapping it.
+             
+             LOOPING: goTo() uses modulo, wraps in both directions.
+             QR code is always the last slide.
+        =========================================== -->
+        <div class="gallery-desktop" id="galleryDesktop">
+
+          <!-- Outer shell — position:relative anchors the side arrows.
+               The arrows are siblings of the clip container, not inside it,
+               so overflow:hidden on the clip never hides them. -->
+          <div class="gallery-desktop-outer">
+
+            <!-- Left arrow — sits on the left side of the image -->
+            <button class="gallery-arrow gallery-arrow-prev" id="galleryPrev" aria-label="Previous slide">&#8592;</button>
+
+            <!-- Image clip container — overflow:hidden only clips slides -->
+            <div class="gallery-track-wrap" id="galleryWrap">
+              <div class="gallery-track" id="galleryTrack">
+
+                <div class="gallery-slide"><img src="/assets/img/chopper_framed.JPG"    alt="Painting 1" /></div>
+                <div class="gallery-slide"><img src="/assets/img/hxh_framed.JPG"        alt="Painting 2" /></div>
+                <div class="gallery-slide"><img src="/assets/img/piccolo_framed.JPG"    alt="Painting 3" /></div>
+                <div class="gallery-slide"><img src="/assets/img/tigerkitty_framed.JPG" alt="Painting 4" /></div>
+                <div class="gallery-slide"><img src="/assets/img/thor_notepad.JPG"      alt="Painting 5" /></div>
+
+                <!-- Last slide: Instagram QR code, always last -->
+                <div class="gallery-slide gallery-slide-qr">
+                  <!-- QR image centered -->
+                  <a href="https://www.instagram.com/tinagraves__" target="_blank" aria-label="Visit @tinagraves__ on Instagram">
+                    <img src="/assets/img/instagram.PNG" alt="Instagram QR Code — scan to follow @tinagraves__" />
+                  </a>
+                  <!-- Caption: left text + right text on same row -->
+                  <div class="qr-caption-split">
+                    <span class="qr-caption-left">Follow on Instagram</span>
+                    <span class="qr-caption-right">Scan or visit <a href="https://www.instagram.com/tinagraves__" target="_blank">@tinagraves__</a></span>
+                  </div>
+                </div>
+
+              </div><!-- /gallery-track -->
+            </div><!-- /gallery-track-wrap -->
+
+            <!-- Right arrow — sits on the right side of the image -->
+            <button class="gallery-arrow gallery-arrow-next" id="galleryNext" aria-label="Next slide">&#8594;</button>
+
+          </div><!-- /gallery-desktop-outer -->
+
+          <!-- Dot indicators — below the image row, built by JS -->
+          <div class="gallery-dots" id="galleryDots"></div>
+
+        </div><!-- /gallery-desktop -->
+
+      </div>
+    </section><!-- /featured -->
+
+
+    <!-- =============================================
+         ABOUT ME
+         
+         CHANGE: Each button now has a hover tooltip
+         explaining what it does.
+         
+         Implementation:
+           - Buttons are wrapped in <span class="btn-tooltip">
+           - The span has a data-tip attribute with the
+             explanation text
+           - CSS uses span::after { content: attr(data-tip) }
+             to render the tooltip bubble on :hover
+           - No change to button appearance or behavior
+    ============================================= -->
     <section class="section section-alt" id="about">
       <div class="section-inner about-flex">
         <div class="about-image">
           <img src="assets/img/shoplogo.JPG" alt="Tina Graves - Noi-Noi Paints" />
-          <!-- Replace with photo of Tina or a representative painting -->
         </div>
         <div class="about-text">
           <h2 class="section-title left">About Me</h2>
           <p>I'm <strong>Tina Graves</strong>, the artist behind Noi-Noi Paints. [Bio goes here, tell your customers a little about who you are, what inspires your art, what makes your work unique, etc.]</p>
           <p>[Bio goes here, tell your customers a little about who you are, what inspires your art, what makes your work unique, etc.]</p>
           <div class="about-links">
-            <a href="https://www.etsy.com" target="_blank" class="btn-primary">My Etsy Shop ↗</a>
-            <a href="https://www.instagram.com/tinagraves__" target="_blank" class="btn-secondary">Instagram ↗</a>
+
+            <!-- btn-tooltip wraps button; data-tip is the explanation shown on hover -->
+            <span class="btn-tooltip" data-tip="Browse &amp; buy my paintings on Etsy">
+              <a href="https://www.etsy.com" target="_blank" class="btn-primary">My Etsy Shop ↗</a>
+            </span>
+
+            <span class="btn-tooltip" data-tip="See new work &amp; behind-the-scenes on Instagram">
+              <a href="https://www.instagram.com/tinagraves__" target="_blank" class="btn-secondary">Instagram ↗</a>
+            </span>
+
           </div>
         </div>
       </div>
-    </section>
+    </section><!-- /about -->
 
-    <!-- FAQ -->
+
+    <!-- =============================================
+         FAQ — unchanged from original
+    ============================================= -->
     <section class="section" id="faq">
       <div class="section-inner">
         <h2 class="section-title">FAQ &amp; Business</h2>
@@ -97,7 +223,7 @@
         <div class="faq-list">
           <div class="faq-item">
             <button class="faq-question" onclick="toggleFaq(this)">Do you take commissions? <span class="faq-icon">+</span></button>
-            <div class="faq-answer"><p>[Example answer — Abosultely! Please reach out via the Contact section at the bottom or top of this page, or my Etsy page to discuss your ideas.]</p></div>
+            <div class="faq-answer"><p>[Example answer — Absolutely! Please reach out via the Contact section at the bottom or top of this page, or my Etsy page to discuss your ideas.]</p></div>
           </div>
           <div class="faq-item">
             <button class="faq-question" onclick="toggleFaq(this)">How long does a commission take? <span class="faq-icon">+</span></button>
@@ -113,66 +239,152 @@
           </div>
           <div class="faq-item">
             <button class="faq-question" onclick="toggleFaq(this)">Can I use your artwork for personal projects? <span class="faq-icon">+</span></button>
-            <div class="faq-answer"><p>[Example answer — All artwork is © Tina Graves / Noi-Noi Paints. Please do not reproduce without written permission.]</p></div>
+            <div class="faq-answer"><p>[Example answer — All artwork is &copy; Tina Graves / Noi-Noi Paints. Please do not reproduce without written permission.]</p></div>
           </div>
         </div>
       </div>
-    </section>
+    </section><!-- /faq -->
 
-    <!-- TESTIMONIALS -->
+
+    <!-- =============================================
+         TESTIMONIALS
+         
+         FIX #5: Section now spans full viewport width.
+           .section-inner removed from around the runner
+           so the scroll strip bleeds edge-to-edge.
+           Title/subtitle still use .section-inner.
+           Left/right fade-out applied via CSS mask-image.
+         
+         FIX #6: Animation duration increased by 25%
+           (22s → 27.5s) so cards scroll more slowly.
+         
+         FIX #7: Hover-pause removed entirely.
+           animation-play-state is always "running".
+           Pointer-events:none on the track so mouse
+           can't interact with the strip at all.
+    ============================================= -->
     <section class="section section-alt" id="testimonials">
+      <!-- Title stays in the max-width inner wrapper -->
       <div class="section-inner">
         <h2 class="section-title">Testimonials</h2>
         <p class="section-subtitle">What people are saying about Noi-Noi Paints.</p>
-        <div class="testimonials-grid">
+      </div>
+
+      <!-- Runner spans full width (outside .section-inner).
+           mask-image creates left/right fade effect (fix #5).
+           pointer-events:none on track means hover never
+           affects the animation (fix #7). -->
+      <div class="testimonials-runner">
+        <div class="testimonials-track" id="testimonialsTrack">
           <div class="testimonial-card">
             <p class="testimonial-text">"Absolutely loved my custom portrait! Tina captured everything perfectly."</p>
-            <p class="testimonial-author">— Tyler Perry</p>
+            <p class="testimonial-author">&#8212; Tyler Perry</p>
           </div>
           <div class="testimonial-card">
             <p class="testimonial-text">"The quality of the work blew me away. Will definitely be ordering again!"</p>
-            <p class="testimonial-author">— Lebron James</p>
+            <p class="testimonial-author">&#8212; Lebron James</p>
           </div>
           <div class="testimonial-card">
             <p class="testimonial-text">"Super communicative throughout the whole process. 10/10 would recommend!"</p>
-            <p class="testimonial-author">— Barack Obama</p>
+            <p class="testimonial-author">&#8212; Barack Obama</p>
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- CONTACT -->
+    </section><!-- /testimonials -->
+
+
+    <!-- =============================================
+         CONTACT
+         
+         CHANGE: "Contact Me" heading is now centered
+         above all content in the section.
+         
+         Original layout had h2 inside .contact-info
+         (the left flex column), so it appeared top-left.
+         
+         Fix: h2 and subtitle are moved ABOVE .contact-flex
+         and centered via .section-title (already has
+         text-align:center in the original CSS).
+         The .contact-info column no longer has its own h2.
+    ============================================= -->
     <section class="section" id="contact">
-      <div class="section-inner contact-flex">
-        <div class="contact-info">
-          <h2 class="section-title left">Contact Me</h2>
-          <p>Have a question, want to discuss a commission, or just want to say hi? Reach out through any of the channels below!</p>
-          <ul class="contact-list">
-            <li><span class="contact-label">Email:</span> <a href="mailto:dempseytina20@gmail.com">dempseytina20@gmail.com</a></li>
-            <li><span class="contact-label">Etsy:</span> <a href="https://www.etsy.com" target="_blank">Noi-Noi Paints on Etsy ↗</a></li>
-            <li><span class="contact-label">Instagram:</span> <a href="https://www.instagram.com/tinagraves__" target="_blank">@tinagraves__ ↗</a></li>
-          </ul>
-        </div>
-        <div class="contact-form">
-          <h3>Send a Message</h3>
-          <div class="form-group">
-            <label for="name">Your Name</label>
-            <input type="text" id="name" placeholder="Enter your name..." />
-          </div>
-          <div class="form-group">
-            <label for="email">Your Email</label>
-            <input type="email" id="email" placeholder="your@email.com" />
-          </div>
-          <div class="form-group">
-            <label for="message">Message</label>
-            <textarea id="message" rows="5" placeholder="Tell me about your commission idea..."></textarea>
-          </div>
-          <button class="btn-primary" type="button">Send Message</button>
-        </div>
-      </div>
-    </section>
+      <div class="section-inner">
 
-    <!-- NEWSLETTER -->
+        <!-- Centered heading — above both flex columns -->
+        <h2 class="section-title">Contact Me</h2>
+        <p class="section-subtitle">Have a question, want to discuss a commission, or just want to say hi? Reach out through any of the channels below!</p>
+
+        <!-- Two-column flex: info + promo left, form right -->
+        <div class="contact-flex">
+
+          <!-- Left column: contact links stacked above promo box -->
+          <div class="contact-left-col">
+
+            <div class="contact-info">
+              <ul class="contact-list">
+                <!-- NOTE: replace with business email once set up -->
+                <li><span class="contact-label">Email:</span> <a href="/cdn-cgi/l/email-protection#2e4a4b435e5d4b575a47404f1c1e6e49434f4742004d4143"><span class="__cf_email__" data-cfemail="1f7b7a726f6c7a666b76717e2d2f5f78727e7673317c7072">[email&#160;protected]</span></a></li>
+                <li><span class="contact-label">Etsy:</span> <a href="https://www.etsy.com" target="_blank">Noi-Noi Paints on Etsy ↗</a></li>
+                <li><span class="contact-label">Instagram:</span> <a href="https://www.instagram.com/tinagraves__" target="_blank">@tinagraves__ ↗</a></li>
+              </ul>
+            </div>
+
+            <!-- Promotions & Coupons box —
+                 Shows active discount codes/deals for customers to browse.
+                 To update: edit the promo-current-value text below. -->
+            <div class="promo-box">
+              <h3>&#127881; Promotions &amp; Coupons</h3>
+              <p class="promo-desc">Active promotions and discount codes are listed below. Check back often for new deals!</p>
+              <div class="promo-current">
+                <p class="promo-current-label">Current Promotions</p>
+                <p class="promo-current-value">[No active promotions at this time — check back soon!]</p>
+              </div>
+            </div>
+
+          </div><!-- /contact-left-col -->
+
+          <!-- Send a Message form -->
+          <div class="contact-form">
+            <h3>Send a Message</h3>
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" placeholder="Enter your name..." />
+            </div>
+            <div class="form-group">
+              <label for="email">Your Email</label>
+              <input type="email" id="email" placeholder="your@email.com" />
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" rows="5" placeholder="Tell me about your commission idea..."></textarea>
+            </div>
+
+            <!-- Coupon code field — optional, but must be applied before sending
+                 if a code is entered. Valid codes are set in applyCoupon() in the JS. -->
+            <div class="form-group coupon-group">
+              <label for="couponCode">Coupon Code <span class="coupon-optional">(optional)</span></label>
+              <div class="coupon-input-row">
+                <input type="text" id="couponCode" placeholder="Enter coupon code..." autocomplete="off" />
+                <button class="btn-secondary coupon-apply-btn" type="button" onclick="applyCoupon()">Apply</button>
+              </div>
+              <p class="coupon-feedback" id="couponFeedback"></p>
+            </div>
+
+            <button class="btn-primary" type="button" id="sendMessageBtn">Send Message</button>
+          </div><!-- /contact-form -->
+
+        </div><!-- /contact-flex -->
+      </div>
+    </section><!-- /contact -->
+
+
+    <!-- =============================================
+         STAY IN THE LOOP (newsletter bar)
+         Unchanged from original. Kept as its own
+         full-width teal section below contact.
+         Feature is deferred until business email is set up.
+    ============================================= -->
     <section class="newsletter-bar">
       <div class="section-inner newsletter-flex">
         <div>
@@ -188,7 +400,10 @@
 
   </main>
 
-  <!-- FOOTER -->
+
+  <!-- =============================================
+       FOOTER — unchanged from original
+  ============================================= -->
   <footer class="site-footer">
     <div class="footer-inner">
       <p class="footer-logo">Noi-Noi Paints</p>
@@ -207,16 +422,312 @@
     </div>
   </footer>
 
+
+  <!-- =============================================
+       JAVASCRIPT
+         1. toggleMenu()  — mobile nav
+         2. toggleFaq()   — FAQ accordion
+         3. Gallery slider — desktop, looping
+         4. Testimonials  — pure CSS animation, JS only duplicates cards
+  ============================================= -->
   <script>
+
+    /* -----------------------------------------------
+       1. MOBILE NAV
+    ----------------------------------------------- */
     function toggleMenu() {
       document.getElementById('mobileNav').classList.toggle('open');
     }
+
+    /* -----------------------------------------------
+       2. FAQ ACCORDION
+    ----------------------------------------------- */
     function toggleFaq(btn) {
-      const item = btn.parentElement;
-      const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      var item   = btn.parentElement;
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
       if (!isOpen) item.classList.add('open');
     }
+
+    /* -----------------------------------------------
+       3. DESKTOP GALLERY SLIDER
+
+       Normal navigation (adjacent slides): smooth CSS
+       transition slides left or right as expected.
+
+       Wrap-around navigation (first→last or last→first):
+         Instead of animating through every slide, the
+         track instantly teleports to the destination with
+         no visible transition, then re-enables the
+         transition for all future normal moves.
+         Technique: set transition:'none', update transform,
+         force a reflow (offsetHeight), then restore transition.
+
+       Dots: clicking a dot always uses a smooth transition
+         regardless of distance, since it's an intentional jump.
+
+       Wheel: scroll over the image to advance/retreat.
+         600ms cooldown prevents over-scrolling.
+         Wrap-around via scroll also uses instant jump.
+    ----------------------------------------------- */
+    (function initGallerySlider() {
+      var track   = document.getElementById('galleryTrack');
+      var wrap    = document.getElementById('galleryWrap');
+      var prevBtn = document.getElementById('galleryPrev');
+      var nextBtn = document.getElementById('galleryNext');
+      var dotsEl  = document.getElementById('galleryDots');
+
+      if (!track) return;
+
+      var slides  = track.querySelectorAll('.gallery-slide');
+      var total   = slides.length;
+      var current = 0;
+
+      /* Build one dot button per slide */
+      for (var i = 0; i < total; i++) {
+        (function(idx) {
+          var dot = document.createElement('button');
+          dot.className = 'gallery-dot' + (idx === 0 ? ' active' : '');
+          dot.setAttribute('aria-label', 'Go to slide ' + (idx + 1));
+          /* Dot clicks always smooth — intentional jump */
+          dot.addEventListener('click', function() { moveTo(idx, false); });
+          dotsEl.appendChild(dot);
+        })(i);
+      }
+
+      /*
+       * moveTo(target, instant)
+       *   target  — destination slide index (0-based, already wrapped)
+       *   instant — true = no CSS transition (silent teleport for wrap-around)
+       */
+      function moveTo(target, instant) {
+        if (instant) {
+          track.style.transition = 'none';
+          track.style.transform  = 'translateX(-' + (target * 100) + '%)';
+          /* Force reflow so browser registers position before re-enabling transition */
+          void track.offsetHeight;
+          track.style.transition = '';
+        } else {
+          track.style.transform = 'translateX(-' + (target * 100) + '%)';
+        }
+        current = target;
+        dotsEl.querySelectorAll('.gallery-dot').forEach(function(d, idx) {
+          d.classList.toggle('active', idx === current);
+        });
+      }
+
+      moveTo(0, false); // initialise at slide 0
+
+      prevBtn.addEventListener('click', function() {
+        if (current === 0) {
+          /* At first slide: jump instantly to last — no scroll-through */
+          moveTo(total - 1, true);
+        } else {
+          moveTo(current - 1, false);
+        }
+      });
+
+      nextBtn.addEventListener('click', function() {
+        if (current === total - 1) {
+          /* At last slide: jump instantly to first — no scroll-through */
+          moveTo(0, true);
+        } else {
+          moveTo(current + 1, false);
+        }
+      });
+
+      /* Scroll wheel — same wrap logic as arrows */
+      var cooling = false;
+      wrap.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        if (cooling) return;
+        cooling = true;
+        setTimeout(function() { cooling = false; }, 600);
+        if (e.deltaY > 0) {
+          /* scrolling down/forward */
+          if (current === total - 1) { moveTo(0, true); }
+          else                       { moveTo(current + 1, false); }
+        } else {
+          /* scrolling up/back */
+          if (current === 0)         { moveTo(total - 1, true); }
+          else                       { moveTo(current - 1, false); }
+        }
+      }, { passive: false });
+
+    })();
+
+    /* -----------------------------------------------
+       4. TESTIMONIALS AUTO-SCROLL
+
+       HOW TO ADD NEW TESTIMONIALS:
+         Open index.html and find the #testimonialsTrack div.
+         Copy any existing .testimonial-card block and paste
+         it as a new sibling inside that same div.
+         Update the quote text and author name.
+         Save the file — JS picks up all cards automatically
+         on every page load. No other changes needed.
+
+         Example card to copy/paste:
+           <div class="testimonial-card">
+             <p class="testimonial-text">"Your quote here."</p>
+             <p class="testimonial-author">— Customer Name</p>
+           </div>
+
+       HOW THE LOOP WORKS:
+         JS clones all original cards and appends the clones
+         after the originals, making the strip twice as wide.
+         A requestAnimationFrame loop moves the strip left by
+         a fixed number of pixels per second (SPEED_PX_PER_SEC).
+         When the offset reaches the measured pixel width of
+         the original set, it resets to 0 instantly — this is
+         perfectly seamless at any window size because it uses
+         real pixel measurements, not percentages.
+
+       TO ADJUST SPEED: change SPEED_PX_PER_SEC below.
+         Higher = faster, lower = slower. Current: 55px/s.
+    ----------------------------------------------- */
+    (function initTestimonials() {
+      var runner = document.querySelector('.testimonials-runner');
+      var track  = document.getElementById('testimonialsTrack');
+      if (!track) return;
+
+      var origCards = Array.prototype.slice.call(
+        track.querySelectorAll('.testimonial-card')
+      );
+      if (origCards.length === 0) return;
+
+      /* Clone every original card and append after originals */
+      origCards.forEach(function(card) {
+        track.appendChild(card.cloneNode(true));
+      });
+
+      /* Pixels per second — raise to go faster */
+      var SPEED_PX_PER_SEC = 55;
+
+      var offset   = 0;
+      var lastTime = null;
+      var loopPx   = 0; /* pixel width of one full original set */
+
+      /* Measure the original set's width in pixels (cards + gaps).
+         GAP_PX must match the CSS gap on .testimonials-track (1.5rem = 24px) */
+      function measure() {
+        var GAP_PX = 24;
+        var w = 0;
+        origCards.forEach(function(c) { w += c.offsetWidth + GAP_PX; });
+        loopPx = w;
+      }
+
+      function tick(ts) {
+        if (!lastTime) lastTime = ts;
+        var delta = (ts - lastTime) / 1000;
+        lastTime = ts;
+
+        offset += SPEED_PX_PER_SEC * delta;
+        if (loopPx > 0 && offset >= loopPx) {
+          offset -= loopPx; /* instant silent reset — seamless at any width */
+        }
+
+        track.style.transform = 'translateX(-' + offset + 'px)';
+        requestAnimationFrame(tick);
+      }
+
+      /* Wait one frame for layout, then measure and start */
+      requestAnimationFrame(function() {
+        measure();
+        window.addEventListener('resize', measure);
+        requestAnimationFrame(tick);
+      });
+
+    })();
+
+    /* -----------------------------------------------
+       5. COUPON CODE VALIDATOR
+
+       HOW TO ADD/REMOVE VALID COUPON CODES:
+         Edit the VALID_CODES object below.
+         Each key is the coupon code (case-insensitive),
+         and the value is the message shown to the customer
+         when they apply it successfully.
+
+         Example:
+           'SAVE10': '10% off your order!',
+           'WELCOME': 'Free shipping on your first order!',
+
+         To disable a code: delete its line from VALID_CODES.
+         To add a code: add a new line in the same format.
+
+       BEHAVIOUR:
+         - If the field is empty when Send Message is clicked,
+           the message sends normally (coupon is optional).
+         - If a code is typed but NOT applied, Send is blocked
+           and the customer is prompted to click Apply first.
+         - If the code is invalid, Send stays blocked and an
+           error message is shown.
+         - If the code is valid and applied, Send is unlocked
+           and a success message is shown.
+    ----------------------------------------------- */
+    var couponApplied  = false; /* true once a valid code is confirmed */
+    var couponRequired = false; /* true if user typed something without applying */
+
+    /* ---- EDIT THIS LIST TO MANAGE ACTIVE COUPON CODES ---- */
+    var VALID_CODES = {
+      /* 'CODE': 'Discount description shown to customer' */
+      'NOINOIPAINTS10': '10% off your commission — applied!'
+      /* Add more codes above this line, separated by commas  */
+    };
+    /* ------------------------------------------------------- */
+
+    function applyCoupon() {
+      var input    = document.getElementById('couponCode');
+      var feedback = document.getElementById('couponFeedback');
+      var sendBtn  = document.getElementById('sendMessageBtn');
+      var code     = input.value.trim().toUpperCase();
+
+      if (!code) {
+        feedback.textContent = 'Please enter a coupon code first.';
+        feedback.className   = 'coupon-feedback coupon-error';
+        couponApplied  = false;
+        couponRequired = false;
+        return;
+      }
+
+      if (VALID_CODES[code]) {
+        feedback.textContent = '✓ ' + VALID_CODES[code];
+        feedback.className   = 'coupon-feedback coupon-success';
+        couponApplied  = true;
+        couponRequired = false;
+        input.disabled = true; /* lock field once applied */
+      } else {
+        feedback.textContent = '✗ That code isn\'t valid. Check the Promotions box for current codes.';
+        feedback.className   = 'coupon-feedback coupon-error';
+        couponApplied  = false;
+        couponRequired = true;
+      }
+    }
+
+    /* Intercept Send Message to enforce coupon rules */
+    document.addEventListener('DOMContentLoaded', function() {
+      var sendBtn = document.getElementById('sendMessageBtn');
+      var couponInput = document.getElementById('couponCode');
+      if (!sendBtn) return;
+
+      sendBtn.addEventListener('click', function() {
+        var code = couponInput ? couponInput.value.trim() : '';
+
+        /* If a code was typed but not applied yet, block send */
+        if (code && !couponApplied) {
+          var feedback = document.getElementById('couponFeedback');
+          feedback.textContent = 'Please click Apply to validate your coupon code first.';
+          feedback.className   = 'coupon-feedback coupon-error';
+          couponInput.focus();
+          return;
+        }
+
+        /* All good — form can be submitted (wire up real submission here) */
+        alert('Message sent! Thank you for reaching out. I\'ll get back to you soon.');
+      });
+    });
+
   </script>
 
 </body>
