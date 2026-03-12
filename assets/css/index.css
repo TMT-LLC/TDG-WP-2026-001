@@ -150,7 +150,7 @@ h1, h2, h3 { font-family: 'EBGaramond', serif; }
 }
 
 .header-inner {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
   height: 72px;
@@ -159,14 +159,41 @@ h1, h2, h3 { font-family: 'EBGaramond', serif; }
   justify-content: space-between;
 }
 
+/* Brand group — logo only, never shrinks */
+.header-brand {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
 /* ============================================= 
-   WEBSITE LOGO — Make it circular
+   WEBSITE LOGO — circular
    ============================================= */
 .logo img {
   height: 52px;
   width: 52px;
   object-fit: cover;
   border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Site name — sits between logo and nav via flex order.
+   padding: 0 1.5rem creates breathing room on both sides.
+   Never hides on any screen size. */
+.header-site-name {
+  font-family: 'EBGaramond', serif;
+  font-style: italic;
+  font-size: clamp(0.95rem, 1.8vw, 1.35rem);
+  font-weight: 600;
+  color: var(--teal);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  padding: 0 1.25rem;
+}
+
+/* Nav — never shrinks, sits right of the name */
+.main-nav {
+  flex-shrink: 0;
 }
 
 
@@ -284,6 +311,7 @@ h1, h2, h3 { font-family: 'EBGaramond', serif; }
   height: 260px;
   object-fit: cover;
   transition: transform 0.4s ease;
+  display: block;
 }
 .gallery-item:hover img { transform: scale(1.04); }
 
@@ -535,7 +563,9 @@ h1, h2, h3 { font-family: 'EBGaramond', serif; }
 /* =============================================
    RESPONSIVE (original)
    ============================================= */
-@media (max-width: 768px) {
+/* Nav collapses to hamburger at 750px — approximately 50% of
+   a standard 1500px desktop screen. Prevents any nav clipping. */
+@media (max-width: 960px) {
   .main-nav { display: none; }
   .hamburger { display: block; }
 
@@ -572,6 +602,34 @@ h1, h2, h3 { font-family: 'EBGaramond', serif; }
 @media (min-width: 769px) {
   .gallery-mobile  { display: none; }
   .gallery-desktop { display: block; }
+}
+
+/* Mobile gallery: single column on phones, 2-col on tablets.
+   .gallery-item inherits flex: 1 1 calc(33.333%) from the base
+   .gallery-item rule, which causes 3-column layout on wider phones.
+   Override here to force sensible stacking at all mobile sizes. */
+@media (max-width: 768px) {
+  .gallery-mobile {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .gallery-mobile .gallery-item {
+    flex: none;
+    width: 100%;
+    min-width: 0;
+  }
+  .gallery-mobile .gallery-item img {
+    height: 280px;
+    object-fit: cover;
+  }
+  .gallery-mobile .gallery-qr-card {
+    background: var(--silver-lt);
+    padding: 2rem 1rem;
+  }
+  .gallery-mobile .gallery-qr-card img {
+    height: 220px !important;
+    object-fit: contain;
+  }
 }
 
 
@@ -650,14 +708,14 @@ h1, h2, h3 { font-family: 'EBGaramond', serif; }
 /* Individual slide — 100% of the clip container width */
 .gallery-slide {
   min-width: 100%;
-  background: var(--silver-lt);
+  background: #1a1a1a;    /* dark neutral — frames artwork cleanly */
   overflow: hidden;
   border-radius: var(--radius);
 }
 .gallery-slide img {
   width: 100%;
-  height: 420px;
-  object-fit: cover;
+  height: 480px;          /* slightly taller to give portrait pieces more room */
+  object-fit: contain;    /* show full artwork — no cropping */
   display: block;
 }
 
@@ -667,7 +725,7 @@ h1, h2, h3 { font-family: 'EBGaramond', serif; }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 420px;
+  height: 480px;
   background: var(--silver-lt);
   gap: 0.75rem;
   text-align: center;
@@ -784,74 +842,165 @@ h1, h2, h3 { font-family: 'EBGaramond', serif; }
 
 
 /* ----------------------------------------------
-   TESTIMONIALS — AUTO-SCROLL
+   TESTIMONIALS
+   Two completely separate implementations:
+     Desktop (>750px): horizontal CSS scroll strip
+     Mobile  (≤750px): crossfade — one card at a time
 
-   The section keeps its original .section padding
-   and .section-inner max-width for the heading.
-   The runner sits inside .section-inner so it
-   respects the page margins, matching original size.
-
-   Fade edges use mask-image gradient on the runner.
-
-   Animation:
-     .scrolling class added by JS when cards are found.
-     Moves strip from translateX(0) → translateX(-50%).
-     JS doubles the cards so -50% = back to visual start.
-     Always running — no hover-pause.
-
-   To add new testimonials:
-     Copy a .testimonial-card block inside #testimonialsTrack.
-     JS re-runs on every page load and picks up all cards.
-
-   Speed: controlled by animationDuration set in JS (27.5s).
-     Reduce the value to go faster, increase to go slower.
+   HOW TO ADD A TESTIMONIAL:
+     Desktop: copy a .testimonial-card into all 4 sets in HTML,
+       update --t-set (card_count × 360px) and --t-dur (new_px ÷ 55).
+     Mobile:  copy a .t-fade-card block in HTML, add a new
+       @keyframes t-fade-N rule, update --tf-slot and --tf-total
+       (see mobile section below).
 ---------------------------------------------- */
 
-/* ----------------------------------------------
-   TESTIMONIALS — AUTO-SCROLL
-
-   The runner clips overflow and fades the edges.
-   The track is a flex row; JS moves it via
-   translateX in a requestAnimationFrame loop.
-   No CSS animation — JS has full control so the
-   loop resets at the exact pixel boundary and works
-   correctly at every window size.
-
-   To add new testimonials: see JS comment block.
----------------------------------------------- */
+/* ── DESKTOP SCROLL ── */
+:root {
+  --t-set: 1080px;   /* 3 cards × (320px + 40px gap) */
+  --t-dur: 19.6s;    /* 1080 ÷ 55px/s                */
+}
 
 .testimonials-runner {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 0 1.5rem;
+}
+
+.testimonials-mask {
   overflow: hidden;
   width: 100%;
   -webkit-mask-image: linear-gradient(
     to right,
-    transparent 0%,
-    black 8%,
-    black 92%,
-    transparent 100%
+    transparent 0%, black 8%, black 92%, transparent 100%
   );
   mask-image: linear-gradient(
     to right,
-    transparent 0%,
-    black 8%,
-    black 92%,
-    transparent 100%
+    transparent 0%, black 8%, black 92%, transparent 100%
   );
-  padding: 0.75rem 0 1.5rem;
 }
 
-/* Track: flex row, JS sets transform directly */
 .testimonials-track {
   display: flex;
-  gap: 2.5rem;          /* spacing between cards — JS uses 24px (1.5rem) for measurement;
-                           if you change this, update GAP_PX in the JS initTestimonials() */
+  gap: 40px;
+  animation: testimonialsScroll var(--t-dur) linear infinite;
   will-change: transform;
-  pointer-events: none; /* strip never blocks mouse interaction */
+  pointer-events: none;
 }
 
-/* Fixed card width so all cards are the same size */
 .testimonials-track .testimonial-card {
   flex: 0 0 320px;
+}
+
+@keyframes testimonialsScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(calc(-1 * var(--t-set))); }
+}
+
+/* ── MOBILE FADE ── */
+/*
+   Cycle math for 3 cards, 15s total:
+     --tf-slot  = time each card is "on stage" = 15s ÷ 3 = 5s
+     --tf-total = full cycle duration = 15s
+
+   Each card's keyframe:
+     0%          → opacity 0  (invisible, waiting)
+     fade-in  %  → opacity 1  (1s fade in  = 1/15 ≈ 6.67%)
+     hold     %  → opacity 1  (3s hold     = ends at 4/15 ≈ 26.67%)
+     fade-out %  → opacity 0  (1s fade out = ends at 5/15 ≈ 33.33%)
+     100%        → opacity 0  (invisible for remaining cycle)
+
+   Card offsets (animation-delay):
+     Card 1: 0s   (starts immediately)
+     Card 2: 5s   (starts after card 1's slot)
+     Card 3: 10s  (starts after card 2's slot)
+
+   HOW TO ADD A 4TH CARD:
+     1. Add .t-fade-4 block in HTML.
+     2. Change --tf-total to 20s, --tf-slot to 5s.
+     3. Recalculate % values: 1/20=5%, 4/20=20%, 5/20=25%.
+     4. Copy the @keyframes pattern for t-fade-4 with delay 15s.
+*/
+:root {
+  --tf-total: 15s;
+}
+
+/* Hidden by default on desktop — shown only on mobile */
+.testimonials-fade {
+  display: none;
+}
+
+/* ── Show/hide by breakpoint ── */
+@media (max-width: 960px) {
+  .testimonials-runner { display: none; }  /* hide desktop scroller */
+  .testimonials-fade {                      /* show mobile fader     */
+    display: block;
+    position: relative;
+    width: 100%;
+    /* height = tallest card; enough for 3 lines of text */
+    height: 200px;
+    margin: 0.75rem 0 1.5rem;
+  }
+}
+
+/* Each fade card sits on top of each other */
+.t-fade-card {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.75rem;
+  background: #fff;
+  border-radius: 8px;
+  border-top: 4px solid var(--teal);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+  opacity: 0;
+  animation: var(--tf-total) linear infinite;
+  will-change: opacity;
+}
+
+/* Card 1 — visible first, no delay */
+.t-fade-1 {
+  animation-name: t-fade-1;
+  animation-delay: 0s;
+}
+/* Card 2 — starts after 5s */
+.t-fade-2 {
+  animation-name: t-fade-2;
+  animation-delay: 5s;
+}
+/* Card 3 — starts after 10s */
+.t-fade-3 {
+  animation-name: t-fade-3;
+  animation-delay: 10s;
+}
+
+/*
+  Each keyframe: fade in over 1s, hold 3s, fade out over 1s,
+  then stay invisible for the remaining 10s of the 15s cycle.
+  Percentages: 0%=0s  6.67%=1s  26.67%=4s  33.33%=5s  100%=15s
+*/
+@keyframes t-fade-1 {
+  0%      { opacity: 0; }
+  6.67%   { opacity: 1; }
+  26.67%  { opacity: 1; }
+  33.33%  { opacity: 0; }
+  100%    { opacity: 0; }
+}
+@keyframes t-fade-2 {
+  0%      { opacity: 0; }
+  6.67%   { opacity: 1; }
+  26.67%  { opacity: 1; }
+  33.33%  { opacity: 0; }
+  100%    { opacity: 0; }
+}
+@keyframes t-fade-3 {
+  0%      { opacity: 0; }
+  6.67%   { opacity: 1; }
+  26.67%  { opacity: 1; }
+  33.33%  { opacity: 0; }
+  100%    { opacity: 0; }
 }
 
 
@@ -908,11 +1057,11 @@ h1, h2, h3 { font-family: 'EBGaramond', serif; }
   color: var(--dark);
 }
 
-/* Promo / Coupon box */
+/* Promo / Coupon box — no border, matches contact-info visual weight */
 .promo-box {
   flex: 1;               /* grows to fill remaining left column height */
   background: var(--silver-lt);
-  border: 1.5px solid var(--silver);
+  border: none;
   border-radius: var(--radius);
   padding: 1.6rem;
   box-shadow: var(--shadow);

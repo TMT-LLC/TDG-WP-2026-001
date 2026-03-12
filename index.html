@@ -17,28 +17,40 @@
   ============================================= -->
   <header class="site-header">
     <div class="header-inner">
-      <div class="logo">
-        <img src="/assets/img/shoplogo.JPG" alt="Noi-Noi Paints Logo" />
+
+      <!-- Col 1: logo (left) -->
+      <div class="header-brand">
+        <div class="logo">
+          <img src="/assets/img/shoplogo.JPG" alt="Noi-Noi Paints Logo" />
+        </div>
       </div>
+
+      <!-- Col 2: site name (true centre) -->
+      <span class="header-site-name">Noi-Noi Paints</span>
+
+      <!-- Col 3: nav or hamburger (right) -->
       <nav class="main-nav">
         <ul>
           <li><a href="#featured">Featured</a></li>
           <li><a href="#about">About Me</a></li>
           <li><a href="#faq">FAQ &amp; Business</a></li>
-          <li><a href="#contact">Contact</a></li>
           <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#contact">Contact</a></li>
           <li><a href="https://www.etsy.com" target="_blank" class="etsy-btn">Visit My Etsy ↗</a></li>
         </ul>
       </nav>
+
       <button class="hamburger" aria-label="Toggle menu" onclick="toggleMenu()">&#9776;</button>
     </div>
+
+    <!-- Mobile nav — same page order -->
     <nav class="mobile-nav" id="mobileNav">
       <ul>
-        <li><a href="#featured" onclick="toggleMenu()">Featured</a></li>
-        <li><a href="#about" onclick="toggleMenu()">About Me</a></li>
-        <li><a href="#faq" onclick="toggleMenu()">FAQ &amp; Business</a></li>
-        <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
-        <li><a href="#testimonials" onclick="toggleMenu()">Testimonials</a></li>
+        <li><a href="#featured"      onclick="toggleMenu()">Featured</a></li>
+        <li><a href="#about"         onclick="toggleMenu()">About Me</a></li>
+        <li><a href="#faq"           onclick="toggleMenu()">FAQ &amp; Business</a></li>
+        <li><a href="#testimonials"  onclick="toggleMenu()">Testimonials</a></li>
+        <li><a href="#contact"       onclick="toggleMenu()">Contact</a></li>
         <li><a href="https://www.etsy.com" target="_blank">Visit My Etsy ↗</a></li>
       </ul>
     </nav>
@@ -89,11 +101,14 @@
         =========================================== -->
         <div class="gallery-grid gallery-mobile">
 
-          <div class="gallery-item"><img src="/assets/img/chopper_framed.JPG"    alt="Painting 1" /></div>
-          <div class="gallery-item"><img src="/assets/img/hxh_framed.JPG"        alt="Painting 2" /></div>
-          <div class="gallery-item"><img src="/assets/img/piccolo_framed.JPG"    alt="Painting 3" /></div>
-          <div class="gallery-item"><img src="/assets/img/tigerkitty_framed.JPG" alt="Painting 4" /></div>
-          <div class="gallery-item"><img src="/assets/img/thor_notepad.JPG"      alt="Painting 5" /></div>
+          <div class="gallery-item"><img src="/assets/img/unfinished-sketch-onepiece.JPG" alt="Painting 1" /></div>
+          <div class="gallery-item"><img src="/assets/img/sketch-onepiece.jpg"            alt="Painting 2" /></div>
+          <div class="gallery-item"><img src="/assets/img/framed-onepiece.jpg"            alt="Painting 3" /></div>
+          <div class="gallery-item"><img src="/assets/img/canvas-ach.jpg"                 alt="Painting 4" /></div>
+          <div class="gallery-item"><img src="/assets/img/canvas-pokemon.jpg"             alt="Painting 5" /></div>
+          <div class="gallery-item"><img src="/assets/img/framed-dbz.jpg"                 alt="Painting 6" /></div>
+          <div class="gallery-item"><img src="/assets/img/framed-hxh.jpg"                 alt="Painting 7" /></div>
+          <div class="gallery-item"><img src="/assets/img/framed-animal.jpg"              alt="Painting 8" /></div>
 
           <!-- 6th container (was 7th) — Instagram QR code, always last on mobile.
                QR image enlarged so phone cameras can scan it easily (fix #3).
@@ -137,11 +152,14 @@
             <div class="gallery-track-wrap" id="galleryWrap">
               <div class="gallery-track" id="galleryTrack">
 
-                <div class="gallery-slide"><img src="/assets/img/chopper_framed.JPG"    alt="Painting 1" /></div>
-                <div class="gallery-slide"><img src="/assets/img/hxh_framed.JPG"        alt="Painting 2" /></div>
-                <div class="gallery-slide"><img src="/assets/img/piccolo_framed.JPG"    alt="Painting 3" /></div>
-                <div class="gallery-slide"><img src="/assets/img/tigerkitty_framed.JPG" alt="Painting 4" /></div>
-                <div class="gallery-slide"><img src="/assets/img/thor_notepad.JPG"      alt="Painting 5" /></div>
+                <div class="gallery-slide"><img src="/assets/img/unfinished-sketch-onepiece.JPG" alt="Painting 1" /></div>
+                <div class="gallery-slide"><img src="/assets/img/sketch-onepiece.jpg"            alt="Painting 2" /></div>
+                <div class="gallery-slide"><img src="/assets/img/framed-onepiece.jpg"            alt="Painting 3" /></div>
+                <div class="gallery-slide"><img src="/assets/img/canvas-ach.jpg"                 alt="Painting 4" /></div>
+                <div class="gallery-slide"><img src="/assets/img/canvas-pokemon.jpg"             alt="Painting 5" /></div>
+                <div class="gallery-slide"><img src="/assets/img/framed-dbz.jpg"                 alt="Painting 6" /></div>
+                <div class="gallery-slide"><img src="/assets/img/framed-hxh.jpg"                 alt="Painting 7" /></div>
+                <div class="gallery-slide"><img src="/assets/img/framed-animal.jpg"              alt="Painting 8" /></div>
 
                 <!-- Last slide: Instagram QR code, always last -->
                 <div class="gallery-slide gallery-slide-qr">
@@ -270,25 +288,67 @@
         <p class="section-subtitle">What people are saying about Noi-Noi Paints.</p>
       </div>
 
-      <!-- Runner spans full width (outside .section-inner).
-           mask-image creates left/right fade effect (fix #5).
-           pointer-events:none on track means hover never
-           affects the animation (fix #7). -->
-      <div class="testimonials-runner">
-        <div class="testimonials-track" id="testimonialsTrack">
-          <div class="testimonial-card">
-            <p class="testimonial-text">"Absolutely loved my custom portrait! Tina captured everything perfectly."</p>
-            <p class="testimonial-author">&#8212; Tyler Perry</p>
-          </div>
-          <div class="testimonial-card">
-            <p class="testimonial-text">"The quality of the work blew me away. Will definitely be ordering again!"</p>
-            <p class="testimonial-author">&#8212; Lebron James</p>
-          </div>
-          <div class="testimonial-card">
-            <p class="testimonial-text">"Super communicative throughout the whole process. 10/10 would recommend!"</p>
-            <p class="testimonial-author">&#8212; Barack Obama</p>
-          </div>
+      <!-- MOBILE (≤750px): fade crossfade — one card at a time.
+           Each card fades in, holds, fades out, then the next
+           appears. Pure CSS, no scrolling, no loop-reset glitch.
+
+           HOW TO ADD A NEW TESTIMONIAL ON MOBILE:
+             1. Copy one .t-fade-card block below and paste it.
+             2. Assign the next animation: t-fade-4, t-fade-5 etc.
+             3. Update the cycle math in CSS — see comment there.
+      -->
+      <div class="testimonials-fade">
+        <div class="t-fade-card t-fade-1">
+          <p class="testimonial-text">"Absolutely loved my custom portrait! Tina captured everything perfectly."</p>
+          <p class="testimonial-author">&#8212; Tyler Perry</p>
         </div>
+        <div class="t-fade-card t-fade-2">
+          <p class="testimonial-text">"The quality of the work blew me away. Will definitely be ordering again!"</p>
+          <p class="testimonial-author">&#8212; Lebron James</p>
+        </div>
+        <div class="t-fade-card t-fade-3">
+          <p class="testimonial-text">"Super communicative throughout the whole process. 10/10 would recommend!"</p>
+          <p class="testimonial-author">&#8212; Barack Obama</p>
+        </div>
+      </div>
+
+      <!-- DESKTOP (>750px): horizontal scroll strip.
+           Cards are repeated 4x so the strip is always wider than any viewport.
+
+           HOW TO ADD A NEW TESTIMONIAL ON DESKTOP:
+             1. Copy one .testimonial-card block.
+             2. Paste it into ALL 4 sets below (match by quote text).
+             3. Update --t-set in CSS: new value = card_count x 360px
+                e.g. 4 cards = 1440px
+             4. Update animation-duration = new_px / 55
+                e.g. 4 cards = 26.2s
+      -->
+      <div class="testimonials-runner">
+        <div class="testimonials-mask">
+          <div class="testimonials-track">
+
+          <!-- SET 1 -->
+          <div class="testimonial-card"><p class="testimonial-text">"Absolutely loved my custom portrait! Tina captured everything perfectly."</p><p class="testimonial-author">&#8212; Tyler Perry</p></div>
+          <div class="testimonial-card"><p class="testimonial-text">"The quality of the work blew me away. Will definitely be ordering again!"</p><p class="testimonial-author">&#8212; Lebron James</p></div>
+          <div class="testimonial-card"><p class="testimonial-text">"Super communicative throughout the whole process. 10/10 would recommend!"</p><p class="testimonial-author">&#8212; Barack Obama</p></div>
+
+          <!-- SET 2 -->
+          <div class="testimonial-card"><p class="testimonial-text">"Absolutely loved my custom portrait! Tina captured everything perfectly."</p><p class="testimonial-author">&#8212; Tyler Perry</p></div>
+          <div class="testimonial-card"><p class="testimonial-text">"The quality of the work blew me away. Will definitely be ordering again!"</p><p class="testimonial-author">&#8212; Lebron James</p></div>
+          <div class="testimonial-card"><p class="testimonial-text">"Super communicative throughout the whole process. 10/10 would recommend!"</p><p class="testimonial-author">&#8212; Barack Obama</p></div>
+
+          <!-- SET 3 -->
+          <div class="testimonial-card"><p class="testimonial-text">"Absolutely loved my custom portrait! Tina captured everything perfectly."</p><p class="testimonial-author">&#8212; Tyler Perry</p></div>
+          <div class="testimonial-card"><p class="testimonial-text">"The quality of the work blew me away. Will definitely be ordering again!"</p><p class="testimonial-author">&#8212; Lebron James</p></div>
+          <div class="testimonial-card"><p class="testimonial-text">"Super communicative throughout the whole process. 10/10 would recommend!"</p><p class="testimonial-author">&#8212; Barack Obama</p></div>
+
+          <!-- SET 4 -->
+          <div class="testimonial-card"><p class="testimonial-text">"Absolutely loved my custom portrait! Tina captured everything perfectly."</p><p class="testimonial-author">&#8212; Tyler Perry</p></div>
+          <div class="testimonial-card"><p class="testimonial-text">"The quality of the work blew me away. Will definitely be ordering again!"</p><p class="testimonial-author">&#8212; Lebron James</p></div>
+          <div class="testimonial-card"><p class="testimonial-text">"Super communicative throughout the whole process. 10/10 would recommend!"</p><p class="testimonial-author">&#8212; Barack Obama</p></div>
+
+        </div>
+        </div><!-- /testimonials-mask -->
       </div>
 
     </section><!-- /testimonials -->
@@ -452,23 +512,10 @@
     /* -----------------------------------------------
        3. DESKTOP GALLERY SLIDER
 
-       Normal navigation (adjacent slides): smooth CSS
-       transition slides left or right as expected.
-
-       Wrap-around navigation (first→last or last→first):
-         Instead of animating through every slide, the
-         track instantly teleports to the destination with
-         no visible transition, then re-enables the
-         transition for all future normal moves.
-         Technique: set transition:'none', update transform,
-         force a reflow (offsetHeight), then restore transition.
-
-       Dots: clicking a dot always uses a smooth transition
-         regardless of distance, since it's an intentional jump.
-
-       Wheel: scroll over the image to advance/retreat.
-         600ms cooldown prevents over-scrolling.
-         Wrap-around via scroll also uses instant jump.
+       Navigation is clamped — arrows stop at the first
+       and last slide. No wrap-around behaviour.
+       Dots still allow jumping to any slide directly.
+       Scroll wheel also clamped — stops at ends.
     ----------------------------------------------- */
     (function initGallerySlider() {
       var track   = document.getElementById('galleryTrack');
@@ -489,156 +536,53 @@
           var dot = document.createElement('button');
           dot.className = 'gallery-dot' + (idx === 0 ? ' active' : '');
           dot.setAttribute('aria-label', 'Go to slide ' + (idx + 1));
-          /* Dot clicks always smooth — intentional jump */
-          dot.addEventListener('click', function() { moveTo(idx, false); });
+          dot.addEventListener('click', function() { moveTo(idx); });
           dotsEl.appendChild(dot);
         })(i);
       }
 
-      /*
-       * moveTo(target, instant)
-       *   target  — destination slide index (0-based, already wrapped)
-       *   instant — true = no CSS transition (silent teleport for wrap-around)
-       */
-      function moveTo(target, instant) {
-        if (instant) {
-          track.style.transition = 'none';
-          track.style.transform  = 'translateX(-' + (target * 100) + '%)';
-          /* Force reflow so browser registers position before re-enabling transition */
-          void track.offsetHeight;
-          track.style.transition = '';
-        } else {
-          track.style.transform = 'translateX(-' + (target * 100) + '%)';
-        }
+      function moveTo(target) {
+        /* Clamp to valid range — no wrap-around */
+        target = Math.max(0, Math.min(total - 1, target));
+        track.style.transform = 'translateX(-' + (target * 100) + '%)';
         current = target;
+        /* Update dots */
         dotsEl.querySelectorAll('.gallery-dot').forEach(function(d, idx) {
           d.classList.toggle('active', idx === current);
         });
+        /* Dim arrows at the ends so user knows they've hit the boundary */
+        prevBtn.style.opacity = current === 0         ? '0.35' : '1';
+        nextBtn.style.opacity = current === total - 1 ? '0.35' : '1';
       }
 
-      moveTo(0, false); // initialise at slide 0
+      moveTo(0); // initialise at slide 0
 
       prevBtn.addEventListener('click', function() {
-        if (current === 0) {
-          /* At first slide: jump instantly to last — no scroll-through */
-          moveTo(total - 1, true);
-        } else {
-          moveTo(current - 1, false);
-        }
+        if (current > 0) moveTo(current - 1);
       });
 
       nextBtn.addEventListener('click', function() {
-        if (current === total - 1) {
-          /* At last slide: jump instantly to first — no scroll-through */
-          moveTo(0, true);
-        } else {
-          moveTo(current + 1, false);
-        }
+        if (current < total - 1) moveTo(current + 1);
       });
 
-      /* Scroll wheel — same wrap logic as arrows */
+      /* Scroll wheel — clamped, no wrap */
       var cooling = false;
       wrap.addEventListener('wheel', function(e) {
         e.preventDefault();
         if (cooling) return;
         cooling = true;
         setTimeout(function() { cooling = false; }, 600);
-        if (e.deltaY > 0) {
-          /* scrolling down/forward */
-          if (current === total - 1) { moveTo(0, true); }
-          else                       { moveTo(current + 1, false); }
-        } else {
-          /* scrolling up/back */
-          if (current === 0)         { moveTo(total - 1, true); }
-          else                       { moveTo(current - 1, false); }
-        }
+        if (e.deltaY > 0 && current < total - 1) moveTo(current + 1);
+        else if (e.deltaY < 0 && current > 0)    moveTo(current - 1);
       }, { passive: false });
 
     })();
 
     /* -----------------------------------------------
-       4. TESTIMONIALS AUTO-SCROLL
-
-       HOW TO ADD NEW TESTIMONIALS:
-         Open index.html and find the #testimonialsTrack div.
-         Copy any existing .testimonial-card block and paste
-         it as a new sibling inside that same div.
-         Update the quote text and author name.
-         Save the file — JS picks up all cards automatically
-         on every page load. No other changes needed.
-
-         Example card to copy/paste:
-           <div class="testimonial-card">
-             <p class="testimonial-text">"Your quote here."</p>
-             <p class="testimonial-author">— Customer Name</p>
-           </div>
-
-       HOW THE LOOP WORKS:
-         JS clones all original cards and appends the clones
-         after the originals, making the strip twice as wide.
-         A requestAnimationFrame loop moves the strip left by
-         a fixed number of pixels per second (SPEED_PX_PER_SEC).
-         When the offset reaches the measured pixel width of
-         the original set, it resets to 0 instantly — this is
-         perfectly seamless at any window size because it uses
-         real pixel measurements, not percentages.
-
-       TO ADJUST SPEED: change SPEED_PX_PER_SEC below.
-         Higher = faster, lower = slower. Current: 55px/s.
+       4. TESTIMONIALS — driven entirely by CSS.
+          No JavaScript needed. See HTML comment in
+          the testimonials section for how to add cards.
     ----------------------------------------------- */
-    (function initTestimonials() {
-      var runner = document.querySelector('.testimonials-runner');
-      var track  = document.getElementById('testimonialsTrack');
-      if (!track) return;
-
-      var origCards = Array.prototype.slice.call(
-        track.querySelectorAll('.testimonial-card')
-      );
-      if (origCards.length === 0) return;
-
-      /* Clone every original card and append after originals */
-      origCards.forEach(function(card) {
-        track.appendChild(card.cloneNode(true));
-      });
-
-      /* Pixels per second — raise to go faster */
-      var SPEED_PX_PER_SEC = 55;
-
-      var offset   = 0;
-      var lastTime = null;
-      var loopPx   = 0; /* pixel width of one full original set */
-
-      /* Measure the original set's width in pixels (cards + gaps).
-         GAP_PX must match the CSS gap on .testimonials-track (1.5rem = 24px) */
-      function measure() {
-        var GAP_PX = 24;
-        var w = 0;
-        origCards.forEach(function(c) { w += c.offsetWidth + GAP_PX; });
-        loopPx = w;
-      }
-
-      function tick(ts) {
-        if (!lastTime) lastTime = ts;
-        var delta = (ts - lastTime) / 1000;
-        lastTime = ts;
-
-        offset += SPEED_PX_PER_SEC * delta;
-        if (loopPx > 0 && offset >= loopPx) {
-          offset -= loopPx; /* instant silent reset — seamless at any width */
-        }
-
-        track.style.transform = 'translateX(-' + offset + 'px)';
-        requestAnimationFrame(tick);
-      }
-
-      /* Wait one frame for layout, then measure and start */
-      requestAnimationFrame(function() {
-        measure();
-        window.addEventListener('resize', measure);
-        requestAnimationFrame(tick);
-      });
-
-    })();
 
     /* -----------------------------------------------
        5. COUPON CODE VALIDATOR
@@ -723,8 +667,8 @@
           return;
         }
 
-        /* All good — form can be submitted (wire up real submission here) */
-        alert('Message sent! Thank you for reaching out. I\'ll get back to you soon.');
+        /* EmailJS submission will be wired up here at a later stage.
+           For now the button does nothing on a clean submission. */
       });
     });
 
