@@ -1,0 +1,71 @@
+<section class="section section-alt" id="testimonials">
+      <!-- Title stays in the max-width inner wrapper -->
+      <div class="section-inner">
+        <h2 class="section-title">Testimonials</h2>
+        <p class="section-subtitle">What people are saying about Noi-Noi Paints.</p>
+      </div>
+
+      <!-- MOBILE (≤750px): fade crossfade — one card at a time.
+           Each card fades in, holds, fades out, then the next
+           appears. Pure CSS, no scrolling, no loop-reset glitch.
+
+           HOW TO ADD A NEW TESTIMONIAL ON MOBILE:
+             1. Copy one .t-fade-card block below and paste it.
+             2. Assign the next animation: t-fade-4, t-fade-5 etc.
+             3. Update the cycle math in CSS — see comment there.
+      -->
+      <div class="testimonials-fade">
+        <div class="t-fade-card t-fade-1">
+          <p class="testimonial-text">"Absolutely loved my custom portrait! Tina captured everything perfectly."</p>
+          <p class="testimonial-author">&#8212; Tyler Perry</p>
+        </div>
+        <div class="t-fade-card t-fade-2">
+          <p class="testimonial-text">"The quality of the work blew me away. Will definitely be ordering again!"</p>
+          <p class="testimonial-author">&#8212; Lebron James</p>
+        </div>
+        <div class="t-fade-card t-fade-3">
+          <p class="testimonial-text">"Super communicative throughout the whole process. 10/10 would recommend!"</p>
+          <p class="testimonial-author">&#8212; Barack Obama</p>
+        </div>
+      </div>
+
+      <!-- DESKTOP (>750px): horizontal scroll strip.
+           Cards are repeated 4x so the strip is always wider than any viewport.
+
+           HOW TO ADD A NEW TESTIMONIAL ON DESKTOP:
+             1. Copy one .testimonial-card block.
+             2. Paste it into ALL 4 sets below (match by quote text).
+             3. Update --t-set in CSS: new value = card_count x 360px
+                e.g. 4 cards = 1440px
+             4. Update animation-duration = new_px / 55
+                e.g. 4 cards = 26.2s
+      -->
+      <div class="testimonials-runner">
+        <div class="testimonials-mask">
+          <div class="testimonials-track">
+
+          <!-- SET 1 -->
+          <div class="testimonial-card"><p class="testimonial-text">"Absolutely loved my custom portrait! Tina captured everything perfectly."</p><p class="testimonial-author">&#8212; Tyler Perry</p></div>
+          <div class="testimonial-card"><p class="testimonial-text">"The quality of the work blew me away. Will definitely be ordering again!"</p><p class="testimonial-author">&#8212; Lebron James</p></div>
+          <div class="testimonial-card"><p class="testimonial-text">"Super communicative throughout the whole process. 10/10 would recommend!"</p><p class="testimonial-author">&#8212; Barack Obama</p></div>
+
+          <!-- SET 2 -->
+          <div class="testimonial-card"><p class="testimonial-text">"Absolutely loved my custom portrait! Tina captured everything perfectly."</p><p class="testimonial-author">&#8212; Tyler Perry</p></div>
+          <div class="testimonial-card"><p class="testimonial-text">"The quality of the work blew me away. Will definitely be ordering again!"</p><p class="testimonial-author">&#8212; Lebron James</p></div>
+          <div class="testimonial-card"><p class="testimonial-text">"Super communicative throughout the whole process. 10/10 would recommend!"</p><p class="testimonial-author">&#8212; Barack Obama</p></div>
+
+          <!-- SET 3 -->
+          <div class="testimonial-card"><p class="testimonial-text">"Absolutely loved my custom portrait! Tina captured everything perfectly."</p><p class="testimonial-author">&#8212; Tyler Perry</p></div>
+          <div class="testimonial-card"><p class="testimonial-text">"The quality of the work blew me away. Will definitely be ordering again!"</p><p class="testimonial-author">&#8212; Lebron James</p></div>
+          <div class="testimonial-card"><p class="testimonial-text">"Super communicative throughout the whole process. 10/10 would recommend!"</p><p class="testimonial-author">&#8212; Barack Obama</p></div>
+
+          <!-- SET 4 -->
+          <div class="testimonial-card"><p class="testimonial-text">"Absolutely loved my custom portrait! Tina captured everything perfectly."</p><p class="testimonial-author">&#8212; Tyler Perry</p></div>
+          <div class="testimonial-card"><p class="testimonial-text">"The quality of the work blew me away. Will definitely be ordering again!"</p><p class="testimonial-author">&#8212; Lebron James</p></div>
+          <div class="testimonial-card"><p class="testimonial-text">"Super communicative throughout the whole process. 10/10 would recommend!"</p><p class="testimonial-author">&#8212; Barack Obama</p></div>
+
+        </div>
+        </div><!-- /testimonials-mask -->
+      </div>
+
+    </section><!-- /testimonials -->
