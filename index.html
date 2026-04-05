@@ -7,13 +7,15 @@
   <link id="url-logo" rel="icon" type="image/png" href="/assets/img/cleanlogo.png">
   <link rel="stylesheet" href="/assets/css/index.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="/assets/js/index.js" defer></script>
 </head>
 <body>
 
   <!-- =============================================
        HEADER / NAV
        Sticky top bar. Hamburger toggles mobile nav.
-       toggleMenu() defined in <script> at bottom.
+       toggleMenu() defined in index.js.
   ============================================= -->
   <header class="site-header">
     <div class="header-inner">
@@ -43,7 +45,7 @@
       <button class="hamburger" aria-label="Toggle menu" onclick="toggleMenu()">&#9776;</button>
     </div>
 
-    <!-- Mobile nav — same page order -->
+    <!-- Mobile nav, same page order -->
     <nav class="mobile-nav" id="mobileNav">
       <ul>
         <li><a href="#featured"      onclick="toggleMenu()">Featured</a></li>
@@ -59,7 +61,7 @@
   <main>
 
     <!-- =============================================
-         HERO — unchanged from original
+         HERO
     ============================================= -->
     <section class="hero">
       <div class="hero-content">
@@ -72,20 +74,6 @@
 
     <!-- =============================================
          FEATURED GALLERY
-         
-         CHANGE: Two separate layouts replace the
-         original single .gallery-grid:
-         
-           .gallery-mobile  — shown only on mobile (<768px)
-             Stacked vertical cards, same gallery-item
-             styling as before. 7th container is always
-             the Instagram QR code.
-         
-           .gallery-desktop — shown only on desktop (>=768px)
-             Manual scroll-wheel + arrow slider.
-             Non-looped (stops at first/last slide).
-             Slide 7 is always the Instagram QR code.
-             JS at bottom drives the track translateX.
     ============================================= -->
     <section class="section" id="featured">
       <div class="section-inner">
@@ -93,12 +81,7 @@
         <p class="section-subtitle">A look at my previous commissioned and non-commissioned paintings for reference, either for sale or already purchased. Check my instagram for some of my other work too!</p>
 
 
-        <!-- ==========================================
-             MOBILE: stacked cards (hidden on desktop)
-             shoplogo.JPG removed per fix #2.
-             QR image enlarged per fix #3.
-             Real Instagram link added per fix #3.
-        =========================================== -->
+        <!-- MOBILE: stacked cards (hidden on desktop) -->
         <div class="gallery-grid gallery-mobile">
 
           <div class="gallery-item"><img src="/assets/img/framed-onepiece.jpg" alt="Painting 1" /></div>
@@ -107,14 +90,11 @@
           <div class="gallery-item"><img src="/assets/img/framed-animal.jpg"                 alt="Painting 4" /></div>
           <div class="gallery-item"><img src="/assets/img/sketch-pokemon.jpg"             alt="Painting 5" /></div>
           <div class="gallery-item"><img src="/assets/img/canvas-pokemon.jpg"                 alt="Painting 6" /></div>
-          <div class="gallery-item"><img src="/assets/img/canvas-ach.jpg"                 alt="Painting 7" /></div> 
+          <div class="gallery-item"><img src="/assets/img/canvas-ach.jpg"                 alt="Painting 7" /></div>
 
-          <!-- 6th container (was 7th) — Instagram QR code, always last on mobile.
-               QR image enlarged so phone cameras can scan it easily (fix #3).
-               @tinagraves__ links to the real Instagram page (fix #3). -->
           <div class="gallery-item gallery-qr-card">
             <a href="https://www.instagram.com/tinagraves__" target="_blank" aria-label="Visit @tinagraves__ on Instagram">
-              <img src="/assets/img/instagram.PNG" alt="Instagram QR Code — scan to follow @tinagraves__" />
+              <img src="/assets/img/instagram.PNG" alt="Instagram QR Code, scan to follow @tinagraves__" />
             </a>
             <div class="qr-caption">
               <p>Follow on Instagram</p>
@@ -125,29 +105,13 @@
         </div><!-- /gallery-mobile -->
 
 
-        <!-- ==========================================
-             DESKTOP: scroll-wheel slider (hidden on mobile)
-             
-             LAYOUT: .gallery-desktop-outer is position:relative
-               and holds the arrows absolutely on its left/right.
-               .gallery-track-wrap is overflow:hidden INSIDE that,
-               so the arrows are never clipped — they sit on the
-               sides of the visible image area without overlapping it.
-             
-             LOOPING: goTo() uses modulo, wraps in both directions.
-             QR code is always the last slide.
-        =========================================== -->
+        <!-- DESKTOP: scroll-wheel slider (hidden on mobile) -->
         <div class="gallery-desktop" id="galleryDesktop">
 
-          <!-- Outer shell — position:relative anchors the side arrows.
-               The arrows are siblings of the clip container, not inside it,
-               so overflow:hidden on the clip never hides them. -->
           <div class="gallery-desktop-outer">
 
-            <!-- Left arrow — sits on the left side of the image -->
             <button class="gallery-arrow gallery-arrow-prev" id="galleryPrev" aria-label="Previous slide">&#8592;</button>
 
-            <!-- Image clip container — overflow:hidden only clips slides -->
             <div class="gallery-track-wrap" id="galleryWrap">
               <div class="gallery-track" id="galleryTrack">
 
@@ -159,13 +123,10 @@
                 <div class="gallery-slide"><img src="/assets/img/canvas-pokemon.jpg"                 alt="Painting 6" /></div>
                 <div class="gallery-slide"><img src="/assets/img/canvas-ach.jpg"                 alt="Painting 7" /></div>
 
-                <!-- Last slide: Instagram QR code, always last -->
                 <div class="gallery-slide gallery-slide-qr">
-                  <!-- QR image centered -->
                   <a href="https://www.instagram.com/tinagraves__" target="_blank" aria-label="Visit @tinagraves__ on Instagram">
-                    <img src="/assets/img/instagram.PNG" alt="Instagram QR Code — scan to follow @tinagraves__" />
+                    <img src="/assets/img/instagram.PNG" alt="Instagram QR Code, scan to follow @tinagraves__" />
                   </a>
-                  <!-- Caption: left text + right text on same row -->
                   <div class="qr-caption-split">
                     <span class="qr-caption-left">Follow on Instagram</span>
                     <span class="qr-caption-right">Scan or visit <a href="https://www.instagram.com/tinagraves__" target="_blank">@tinagraves__</a></span>
@@ -175,12 +136,10 @@
               </div><!-- /gallery-track -->
             </div><!-- /gallery-track-wrap -->
 
-            <!-- Right arrow — sits on the right side of the image -->
             <button class="gallery-arrow gallery-arrow-next" id="galleryNext" aria-label="Next slide">&#8594;</button>
 
           </div><!-- /gallery-desktop-outer -->
 
-          <!-- Dot indicators — below the image row, built by JS -->
           <div class="gallery-dots" id="galleryDots"></div>
 
         </div><!-- /gallery-desktop -->
@@ -191,17 +150,6 @@
 
     <!-- =============================================
          ABOUT ME
-         
-         CHANGE: Each button now has a hover tooltip
-         explaining what it does.
-         
-         Implementation:
-           - Buttons are wrapped in <span class="btn-tooltip">
-           - The span has a data-tip attribute with the
-             explanation text
-           - CSS uses span::after { content: attr(data-tip) }
-             to render the tooltip bubble on :hover
-           - No change to button appearance or behavior
     ============================================= -->
     <section class="section section-alt" id="about">
       <div class="section-inner about-flex">
@@ -212,23 +160,19 @@
           <h2 class="section-title left">About Me</h2>
           <p>I'm <strong>Tina Graves</strong>, the artist behind Noi-Noi Paints. Ever since I could remember, I've always been fascinated
           by art, and the media I grew up loving has fueled my inspiration to want to share
-          some of the interests I’ve always admired.
+          some of the interests I've always admired.
           </p>
           <p>Media such as Anime, Video Games, Comic Books, and Kaiju, have been the backbone for my
           love to create. Therefore, I hope that through my paintings I can spread that same adoration and
           overall admiration of animation and media!
           </p>
           <div class="about-links">
-
-            <!-- btn-tooltip wraps button; data-tip is the explanation shown on hover -->
             <span class="btn-tooltip" data-tip="Browse &amp; buy my paintings on Etsy">
               <a href="https://www.etsy.com" target="_blank" class="btn-primary">My Etsy Shop ↗</a>
             </span>
-
             <span class="btn-tooltip" data-tip="See new work &amp; behind-the-scenes on Instagram">
               <a href="https://www.instagram.com/tinagraves__" target="_blank" class="btn-secondary">Instagram ↗</a>
             </span>
-
           </div>
         </div>
       </div>
@@ -236,7 +180,7 @@
 
 
     <!-- =============================================
-         FAQ — unchanged from original
+         FAQ
     ============================================= -->
     <section class="section" id="faq">
       <div class="section-inner">
@@ -252,15 +196,15 @@
           </div>
           <div class="faq-item">
             <button class="faq-question" onclick="toggleFaq(this)">How long does a commission take? <span class="faq-icon">+</span></button>
-            <div class="faq-answer"><p>It’ll vary based on complexity, sizing, and the volume of other commissions/works.
+            <div class="faq-answer"><p>It'll vary based on complexity, sizing, and the volume of other commissions/works.
             Though typically it takes around 4 days- 1 week to complete simpler works, and around 10
             days- 2 weeks for something more complex.
             </p></div>
           </div>
           <div class="faq-item">
             <button class="faq-question" onclick="toggleFaq(this)">How do I commission you?<span class="faq-icon">+</span></button>
-            <div class="faq-answer"><p>Send me an email with what you want painted. Include what media it’s from, provide a
-            reference photo, and let me know if there’s any extra things you would like for me to include. (Just bear in mind the more complex, the more time it may take and the more it may potentially
+            <div class="faq-answer"><p>Send me an email with what you want painted. Include what media it's from, provide a
+            reference photo, and let me know if there's any extra things you would like for me to include. (Just bear in mind the more complex, the more time it may take and the more it may potentially
             cost.)
             </p></div>
           </div>
@@ -286,96 +230,120 @@
 
 
     <!-- =============================================
-         TESTIMONIALS
-    ============================================= -->
-
-
-    <!-- =============================================
          CONTACT
-         
-         CHANGE: "Contact Me" heading is now centered
-         above all content in the section.
-         
-         Original layout had h2 inside .contact-info
-         (the left flex column), so it appeared top-left.
-         
     ============================================= -->
     <section class="section" id="contact">
       <div class="section-inner">
 
-        <!-- Centered heading — above both flex columns -->
         <h2 class="section-title">Contact Me</h2>
-        <p class="section-subtitle">Have a question, want to discuss a commission, or just want to say hi? Reach out through any of the channels below!</p>
+        <p class="section-subtitle">
+          Have a question, want to discuss a commission, or just want to say hi?
+          Reach out through any of the channels below!
+        </p>
 
-        <!-- Two-column flex: info + promo left, form right -->
         <div class="contact-flex">
 
-          <!-- Left column: contact links stacked above promo box -->
+          <!-- LEFT COLUMN -->
           <div class="contact-left-col">
 
             <div class="contact-info">
               <ul class="contact-list">
-                <!-- NOTE: replace with business email once set up -->
-                <li><span class="contact-label">Email:</span> <a href="/cdn-cgi/l/email-protection#2e4a4b435e5d4b575a47404f1c1e6e49434f4742004d4143"><span class="__cf_email__" data-cfemail="1f7b7a726f6c7a666b76717e2d2f5f78727e7673317c7072">[email&#160;protected]</span></a></li>
-                <li><span class="contact-label">Etsy:</span> <a href="https://www.etsy.com" target="_blank">Noi-Noi Paints on Etsy ↗</a></li>
-                <li><span class="contact-label">Instagram:</span> <a href="https://www.instagram.com/tinagraves__" target="_blank">@tinagraves__ ↗</a></li>
+                <li><span class="contact-label">Email:</span>
+                  <a href="mailto:owner.noinoipaints@gmail.com">
+                    owner.noinoipaints@gmail.com ↗
+                  </a>
+                </li>
+                <li><span class="contact-label">Etsy:</span>
+                  <a href="https://www.etsy.com" target="_blank">
+                    Noi-Noi Paints on Etsy ↗
+                  </a>
+                </li>
+                <li><span class="contact-label">Instagram:</span>
+                  <a href="https://www.instagram.com/tinagraves__" target="_blank">
+                    @tinagraves__ ↗
+                  </a>
+                </li>
               </ul>
             </div>
 
-            <!-- Promotions & Coupons box —
-                 Shows active discount codes/deals for customers to browse.
-                 To update: edit the promo-current-value text below. -->
             <div class="promo-box">
-              <h3>&#127881; Promotions &amp; Coupons</h3>
-              <p class="promo-desc">Active promotions and discount codes are listed below. Check back often for new deals!</p>
+              <h3>&#127881; Promotions & Coupons</h3>
+              <p class="promo-desc">
+                Active promotions and discount codes are listed below.
+              </p>
               <div class="promo-current">
                 <p class="promo-current-label">Current Promotions</p>
-                <p class="promo-current-value">[No active promotions at this time — check back soon!]</p>
+                <p class="promo-current-value">
+                  [No active promotions at this time, check back soon!]
+                </p>
               </div>
             </div>
 
-          </div><!-- /contact-left-col -->
+          </div>
 
-          <!-- Send a Message form -->
+          <!-- RIGHT COLUMN: FORM
+               FIX SUMMARY vs original HTML:
+                 - Input IDs changed: user_name→name, user_email→email (message unchanged)
+                 - Error <span> elements added after each input
+                 - id="contactBtn" added to submit button
+                 - id="contactStatus" paragraph added below button
+                 - id="applyCouponBtn" added to Apply button
+                 - Inline onclick="applyCoupon()" removed from Apply button
+                   (now wired in index.js DOMContentLoaded to avoid conflicts)
+          -->
           <div class="contact-form">
             <h3>Send a Message</h3>
-            <div class="form-group">
-              <label for="name">Your Name</label>
-              <input type="text" id="name" placeholder="Enter your name..." />
-            </div>
-            <div class="form-group">
-              <label for="email">Your Email</label>
-              <input type="email" id="email" placeholder="your@email.com" />
-            </div>
-            <div class="form-group">
-              <label for="message">Message</label>
-              <textarea id="message" rows="5" placeholder="Tell me about your commission idea..."></textarea>
-            </div>
 
-            <!-- Coupon code field — optional, but must be applied before sending
-                 if a code is entered. Valid codes are set in applyCoupon() in the JS. -->
-            <div class="form-group coupon-group">
-              <label for="couponCode">Coupon Code <span class="coupon-optional">(optional)</span></label>
-              <div class="coupon-input-row">
-                <input type="text" id="couponCode" placeholder="Enter coupon code..." autocomplete="off" />
-                <button class="btn-secondary coupon-apply-btn" type="button" onclick="applyCoupon()">Apply</button>
+            <form id="contactForm" novalidate>
+
+              <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="user_name" placeholder="Jane Smith" />
+                <span class="field-error" id="err-name">Please enter your name.</span>
               </div>
-              <p class="coupon-feedback" id="couponFeedback"></p>
-            </div>
 
-            <button class="btn-primary" type="button" id="sendMessageBtn">Send Message</button>
-          </div><!-- /contact-form -->
+              <div class="form-group">
+                <label for="email">Your Email</label>
+                <input type="email" id="email" name="user_email" placeholder="jane@example.com" />
+                <span class="field-error" id="err-email">Please enter a valid email address.</span>
+              </div>
 
-        </div><!-- /contact-flex -->
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" placeholder="Tell me about your commission idea..."></textarea>
+                <span class="field-error" id="err-message">Please enter a message.</span>
+              </div>
+
+              <!-- Coupon (optional) -->
+              <div class="form-group coupon-group">
+                <label for="couponCode">
+                  Coupon Code <span class="coupon-optional">(optional)</span>
+                </label>
+                <div class="coupon-input-row">
+                  <input type="text" id="couponCode" placeholder="Enter coupon code..." />
+                  <button type="button" id="applyCouponBtn" class="btn-secondary coupon-apply-btn">Apply</button>
+                </div>
+                <p class="coupon-feedback" id="couponFeedback"></p>
+              </div>
+
+              <!-- Submit button -->
+              <button type="submit" id="contactBtn" class="btn-primary">
+                Send Message
+              </button>
+
+              <!-- Status message — shown after send attempt -->
+              <p class="form-status" id="contactStatus"></p>
+
+            </form>
+          </div>
+
+        </div>
       </div>
     </section>
 
 
     <!-- =============================================
-         STAY IN THE LOOP (newsletter bar)
-         Unchanged from original. Kept as its own
-         full-width teal section below contact.
-         Feature is deferred until business email is set up.
+         STAY IN THE LOOP
     ============================================= -->
     <section class="newsletter-bar">
       <div class="section-inner newsletter-flex">
@@ -394,7 +362,7 @@
 
 
   <!-- =============================================
-       FOOTER — unchanged from original
+       FOOTER
   ============================================= -->
   <footer class="site-footer">
     <div class="footer-inner">
@@ -416,194 +384,23 @@
 
 
   <!-- =============================================
-       JAVASCRIPT
-         1. toggleMenu()  — mobile nav
-         2. toggleFaq()   — FAQ accordion
-         3. Gallery slider — desktop, looping
-         4. Testimonials  — pure CSS animation, JS only duplicates cards
+       INLINE JAVASCRIPT
+       Only toggleMenu and toggleFaq remain here.
+       Everything else (gallery slider, EmailJS,
+       coupon logic) has been moved to index.js
+       to eliminate variable/function conflicts.
   ============================================= -->
   <script>
-
-    /* -----------------------------------------------
-       1. MOBILE NAV
-    ----------------------------------------------- */
     function toggleMenu() {
       document.getElementById('mobileNav').classList.toggle('open');
     }
 
-    /* -----------------------------------------------
-       2. FAQ ACCORDION
-    ----------------------------------------------- */
     function toggleFaq(btn) {
       var item   = btn.parentElement;
       var isOpen = item.classList.contains('open');
       document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
       if (!isOpen) item.classList.add('open');
     }
-
-    /* -----------------------------------------------
-       3. DESKTOP GALLERY SLIDER
-
-       Navigation is clamped — arrows stop at the first
-       and last slide. No wrap-around behaviour.
-       Dots still allow jumping to any slide directly.
-       Scroll wheel also clamped — stops at ends.
-    ----------------------------------------------- */
-    (function initGallerySlider() {
-      var track   = document.getElementById('galleryTrack');
-      var wrap    = document.getElementById('galleryWrap');
-      var prevBtn = document.getElementById('galleryPrev');
-      var nextBtn = document.getElementById('galleryNext');
-      var dotsEl  = document.getElementById('galleryDots');
-
-      if (!track) return;
-
-      var slides  = track.querySelectorAll('.gallery-slide');
-      var total   = slides.length;
-      var current = 0;
-
-      /* Build one dot button per slide */
-      for (var i = 0; i < total; i++) {
-        (function(idx) {
-          var dot = document.createElement('button');
-          dot.className = 'gallery-dot' + (idx === 0 ? ' active' : '');
-          dot.setAttribute('aria-label', 'Go to slide ' + (idx + 1));
-          dot.addEventListener('click', function() { moveTo(idx); });
-          dotsEl.appendChild(dot);
-        })(i);
-      }
-
-      function moveTo(target) {
-        /* Clamp to valid range — no wrap-around */
-        target = Math.max(0, Math.min(total - 1, target));
-        track.style.transform = 'translateX(-' + (target * 100) + '%)';
-        current = target;
-        /* Update dots */
-        dotsEl.querySelectorAll('.gallery-dot').forEach(function(d, idx) {
-          d.classList.toggle('active', idx === current);
-        });
-        /* Dim arrows at the ends so user knows they've hit the boundary */
-        prevBtn.style.opacity = current === 0         ? '0.35' : '1';
-        nextBtn.style.opacity = current === total - 1 ? '0.35' : '1';
-      }
-
-      moveTo(0); // initialise at slide 0
-
-      prevBtn.addEventListener('click', function() {
-        if (current > 0) moveTo(current - 1);
-      });
-
-      nextBtn.addEventListener('click', function() {
-        if (current < total - 1) moveTo(current + 1);
-      });
-
-      /* Scroll wheel — clamped, no wrap */
-      var cooling = false;
-      wrap.addEventListener('wheel', function(e) {
-        e.preventDefault();
-        if (cooling) return;
-        cooling = true;
-        setTimeout(function() { cooling = false; }, 600);
-        if (e.deltaY > 0 && current < total - 1) moveTo(current + 1);
-        else if (e.deltaY < 0 && current > 0)    moveTo(current - 1);
-      }, { passive: false });
-
-    })();
-
-    /* -----------------------------------------------
-       4. TESTIMONIALS — driven entirely by CSS.
-          No JavaScript needed. See HTML comment in
-          the testimonials section for how to add cards.
-    ----------------------------------------------- */
-
-    /* -----------------------------------------------
-       5. COUPON CODE VALIDATOR
-
-       HOW TO ADD/REMOVE VALID COUPON CODES:
-         Edit the VALID_CODES object below.
-         Each key is the coupon code (case-insensitive),
-         and the value is the message shown to the customer
-         when they apply it successfully.
-
-         Example:
-           'SAVE10': '10% off your order!',
-           'WELCOME': 'Free shipping on your first order!',
-
-         To disable a code: delete its line from VALID_CODES.
-         To add a code: add a new line in the same format.
-
-       BEHAVIOUR:
-         - If the field is empty when Send Message is clicked,
-           the message sends normally (coupon is optional).
-         - If a code is typed but NOT applied, Send is blocked
-           and the customer is prompted to click Apply first.
-         - If the code is invalid, Send stays blocked and an
-           error message is shown.
-         - If the code is valid and applied, Send is unlocked
-           and a success message is shown.
-    ----------------------------------------------- */
-    var couponApplied  = false; /* true once a valid code is confirmed */
-    var couponRequired = false; /* true if user typed something without applying */
-
-    /* ---- EDIT THIS LIST TO MANAGE ACTIVE COUPON CODES ---- */
-    var VALID_CODES = {
-      /* 'CODE': 'Discount description shown to customer' */
-      'NOINOIPAINTS10': '10% off your commission — applied!'
-      /* Add more codes above this line, separated by commas  */
-    };
-    /* ------------------------------------------------------- */
-
-    function applyCoupon() {
-      var input    = document.getElementById('couponCode');
-      var feedback = document.getElementById('couponFeedback');
-      var sendBtn  = document.getElementById('sendMessageBtn');
-      var code     = input.value.trim().toUpperCase();
-
-      if (!code) {
-        feedback.textContent = 'Please enter a coupon code first.';
-        feedback.className   = 'coupon-feedback coupon-error';
-        couponApplied  = false;
-        couponRequired = false;
-        return;
-      }
-
-      if (VALID_CODES[code]) {
-        feedback.textContent = '✓ ' + VALID_CODES[code];
-        feedback.className   = 'coupon-feedback coupon-success';
-        couponApplied  = true;
-        couponRequired = false;
-        input.disabled = true; /* lock field once applied */
-      } else {
-        feedback.textContent = '✗ That code isn\'t valid. Check the Promotions box for current codes.';
-        feedback.className   = 'coupon-feedback coupon-error';
-        couponApplied  = false;
-        couponRequired = true;
-      }
-    }
-
-    /* Intercept Send Message to enforce coupon rules */
-    document.addEventListener('DOMContentLoaded', function() {
-      var sendBtn = document.getElementById('sendMessageBtn');
-      var couponInput = document.getElementById('couponCode');
-      if (!sendBtn) return;
-
-      sendBtn.addEventListener('click', function() {
-        var code = couponInput ? couponInput.value.trim() : '';
-
-        /* If a code was typed but not applied yet, block send */
-        if (code && !couponApplied) {
-          var feedback = document.getElementById('couponFeedback');
-          feedback.textContent = 'Please click Apply to validate your coupon code first.';
-          feedback.className   = 'coupon-feedback coupon-error';
-          couponInput.focus();
-          return;
-        }
-
-        /* EmailJS submission will be wired up here at a later stage.
-           For now the button does nothing on a clean submission. */
-      });
-    });
-
   </script>
 
 </body>
